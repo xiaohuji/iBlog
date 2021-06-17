@@ -13,6 +13,7 @@ var User = require('./models/User');
 var app = express();
 //设置静态文件托管
 //当用户访问Url 以/public开始，那么直接返回对应 _dirname + '/public'下的文件
+// 就是附上本机的路径+public，以找到文件在本机的位置
 // app.use(express.static(path.join(__dirname,'public')));
 app.use('/public', express.static(__dirname + '/public'));
 
@@ -68,6 +69,25 @@ app.use(function (req, res, next) {
 
 //路由控制
 //根据不同功能划分模块
+// 就是use.get
+
+// var express = require('express');
+// var app = express();
+// app.get('/hello',function(req,res,next){
+//     res.send('hello test2');
+ 
+// });
+// 等同于：
+
+// var express = require('express');
+// var app = express();
+// var router = express.Router();
+ 
+// router.get('/', function(req, res, next) {
+//   res.send('hello world!');
+// });
+// app.use('/hello',router);
+
 app.use('/', require('./routers/main'));
 app.use('/admin', require('./routers/admin'));
 // app.use('/user', require('./routers/users'));
@@ -87,5 +107,5 @@ mongoose.connect('mongodb://localhost/myMongoose', function (err) {
         console.log('Server is running at http://localhost:8081');
     }
 });
-// app.listen(8081, 'localhost');
+app.listen(3001, 'localhost');
 // console.log('Server is running at http://localhost:8081');

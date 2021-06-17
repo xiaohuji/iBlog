@@ -3,15 +3,37 @@
 
 Blog 个人博客系统
 
-后端框架参考于：https://github.com/Zhangyei/iBlog  
+一开始框架参考于：https://github.com/Zhangyei/iBlog  
 ISC许可证与BSD差不多  
 谢谢大佬的开源  
 先读懂别人是怎么写的  
-现在在此之上做出一些重构和改进  
+终于有点看懂了我天  
+我发现这是一个前后端不分离的项目  
+现在在此之上做出一些重构和改进，前后端分离  
 6.16前端（游客界面）找了一个简介好看的模板开始研读  
 6.17vue双向绑定真香  
 	尝试修改界面，增加登录界面    
-	猜前端接口的用意尝试编写后端接口  
+	猜前端接口的用意尝试编写后端接口 
+噢，我一定要说一下，我今天真的是在mongodb find返回值 和 异步 上面吃大亏了呜呜呜呜，网上还搜不到，一整天基本就弄了这一个东西  
+mongodb.find({})返回的是document类型而不是object类型！！！！！  
+所以返回的就是一大堆看都看不懂的东西也不知道哪里来的东西  
+哇难受 
+还有就是nodejs是异步的！异步的！异步的！重要的事情说三遍  
+var contentListValue
+routerApi.get('/content-list', function (req, res) {
+    ContentList.find({}).lean().exec((err, docs) => {
+        contentListValue = docs
+        console.log(contentListValue);
+        res.json(contentListValue);
+      })
+
+find后面要用lean().exec((err, docs)xxxxx这种方式
+还有 res.json(contentListValue)一定要放在这个方法内部！！！！
+放在外面就会提前执行，在lean()方法完成前就执行了，然后就一直都是undefind哇难受  
+重点是这两个问题发生在了一起，我可能早些时候已经试对了，但还是最后返回undefind，我又一直搜搜搜 难受啊表达出来发泄一下  
+还好现在终于解决了  
+
+
 
 ###模块说明.
 

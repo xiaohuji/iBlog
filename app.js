@@ -87,12 +87,25 @@ app.use(function (req, res, next) {
 //   res.send('hello world!');
 // });
 // app.use('/hello',router);
+app.all('/api/*', (req, res, next) => {
+    const origin = req.headers.origin;
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS, DELETE');
+    
+    next();
+  });
 
 app.use('/', require('./routers/main'));
 app.use('/admin', require('./routers/admin'));
 // app.use('/user', require('./routers/users'));
 app.use('/api', require('./routers/api'));
 
+app.use((req, res, next) => {
+//   res.sendFile(path.dirname(require.main.filename) + '/public/index.html');
+  res.status(404);
+});
 
 //监听Http请求  XXX端口的信息数据
 // mongoose.connect('mongodb://localhost:27018/iBlog', function (err) {

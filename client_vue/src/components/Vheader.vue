@@ -11,6 +11,12 @@
       <li>
         <a v-link="'/tags'">标签</a>
       </li>
+      <li>
+        <a v-link="'/tags'">登录</a>
+      </li>
+      <li>
+        <a v-link="'/tags'">管理</a>
+      </li>
       
     </ul>
     <div class="header-title"><h1 v-if="show" transition="fade">{{headlineFinal}}</h1></div>

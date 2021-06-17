@@ -16,6 +16,7 @@ var routerApi = express.Router();
 
 var User = require('../models/User');
 var Content = require('../models/Content');
+var ContentList = require('../models/ContentList');
 
 // var responseData = require('../models/ReturnDataFormat');
 
@@ -27,6 +28,27 @@ routerApi.use(function (req, res, next) {
         message: ''
     }
     next();
+});
+// 返回游客主页内容
+var contentListValue
+routerApi.get('/content-list', function (req, res) {
+    ContentList.find({}).lean().exec((err, docs) => {
+        contentListValue = docs
+        console.log(contentListValue);
+        res.json(contentListValue);
+      })
+    // ContentList.find({}).then(function (content) {
+    //     console.log(content);
+    //     contentListValue = {
+    //         _id:content._id
+    //     };
+        
+    // });
+
+    // console.log(contentListValue);
+
+    // res.json(contentListValue);
+    return;
 });
 
 

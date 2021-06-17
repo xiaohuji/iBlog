@@ -3,6 +3,7 @@
     <ul class="list-container" id="list-ul">
       <li v-for="item in items">
         <a v-link="{ name: 'article', params: {id: item.objectId}}">
+          <!-- <a v-link="{ name: 'article', params: {id: item._id}}"> -->
           <p class="list-title">{{item.title}}</p>
           <p class="list-updated">{{item.createdAt}}</p>
           <p class="list-abstract">{{item.abstract}}</p>

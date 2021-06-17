@@ -28,6 +28,7 @@ var routerAdmin = express.Router();
 var User = require('../models/User');//用户模型
 var Category = require('../models/Category');//分类模型
 var Content = require('../models/Content');//内容模型
+var ContentList = require('../models/ContentList');
 //
 routerAdmin.use(function (req, res, next) {
     //对进入用户身份进行验证
@@ -330,7 +331,13 @@ routerAdmin.post('/content/add', function (req, res, next) {
             description: postData.description,
             content: postData.content
         });
-        // console.log(newContent);
+        var newContentList = new ContentList({
+            title: postData.title,
+            abstract: postData.description,
+            content: postData.content
+        });
+        newContentList.save()
+        console.log(newContentList);
         newContent.save().then(function (rs) {
             res.render('admin/success', {
                 userInfo: req.userInfo,

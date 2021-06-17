@@ -14,6 +14,7 @@ var schema = new mongoose.Schema({
     //关联字段  // 分类的ID
     category: {
         //类型
+        // 这个是主键的意思
         type: mongoose.Schema.Types.ObjectId,
         //引用
         ref: 'Category'//  关联category表中的ID 字段

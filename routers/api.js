@@ -13,6 +13,7 @@
 
 var express = require('express');
 var routerApi = express.Router();
+const moment = require('moment')
 
 var User = require('../models/User');
 var Content = require('../models/Content');
@@ -29,11 +30,20 @@ routerApi.use(function (req, res, next) {
     }
     next();
 });
+
 // 返回游客主页内容
 var contentListValue
 routerApi.get('/content-list', function (req, res) {
     ContentList.find({}).lean().exec((err, docs) => {
-        contentListValue = docs
+        contentListValue = []
+        for (let item of docs) {
+            let result = {}
+            result.objectId = item.objectId
+            result.title = item.title
+            result.abstract = item.abstract
+            result.createdAt = moment(String(item.createAt)).format('YYYY-MM-DD hh:mm:ss');
+            contentListValue.push(result)
+        }
         console.log(contentListValue);
         res.json(contentListValue);
       })

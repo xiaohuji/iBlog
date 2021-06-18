@@ -32,20 +32,21 @@ routerApi.use(function (req, res, next) {
 });
 
 // 返回游客主页内容
-var contentListValue
+var Value
 routerApi.get('/content-list', function (req, res) {
     ContentList.find({}).lean().exec((err, docs) => {
-        contentListValue = []
+        Value = []
         for (let item of docs) {
             let result = {}
-            result.objectId = item.objectId
+            console.log(item);
+            result.objectId = item._id
             result.title = item.title
             result.abstract = item.abstract
             result.createdAt = moment(String(item.createAt)).format('YYYY-MM-DD hh:mm:ss');
-            contentListValue.push(result)
+            Value.push(result)
         }
-        console.log(contentListValue);
-        res.json(contentListValue);
+        console.log(Value);
+        res.json(Value);
       })
     // ContentList.find({}).then(function (content) {
     //     console.log(content);
@@ -61,7 +62,40 @@ routerApi.get('/content-list', function (req, res) {
     return;
 });
 
+// 返回文章内容
+routerApi.get('/article/:id', function (req, res) {
+    console.log('article');
+    console.log(req.params.id);
+    ContentList.findOne({"_id":req.params.id}).lean().exec((err, docs) => {
+        console.log('docs');
+        console.log(docs);
+        let result = {}
+        result.content = docs.content
+        console.log(result);
+        res.json(result);
+      })
+    return;
+});
 
+
+// // 返回文章内容
+// routerApi.get('/comments/:articleId', function (req, res) {
+//     ContentList.find({}).lean().exec((err, docs) => {
+//         Value = []
+//         for (let item of docs) {
+//             let result = {}
+//             console.log(item);
+//             result.objectId = item._id
+//             result.title = item.title
+//             result.abstract = item.abstract
+//             result.createdAt = moment(String(item.createAt)).format('YYYY-MM-DD hh:mm:ss');
+//             Value.push(result)
+//         }
+//         console.log(Value);
+//         res.json(Value);
+//       })
+//     return;
+// });
 /*
  *  用户注册
  *      1、用户名不能为空   // 不能存在同名（已注册）

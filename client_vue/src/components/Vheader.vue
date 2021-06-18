@@ -12,7 +12,7 @@
         <a v-link="'/tags'">标签</a>
       </li>
       <li>
-        <a v-link="'/tags'">登录</a>
+        <a v-link="'/login'">登录</a>
       </li>
       <li>
         <a v-link="'/tags'">管理</a>

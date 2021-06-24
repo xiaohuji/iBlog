@@ -27,15 +27,14 @@ var schema = new mongoose.Schema({
     },
     //内容标题
     title: String,
+    // 作者名字
+    username: String,
     //内容简介
     description: {type: String, default: ''},
     //内容
     content: {type: String, default: ''},
     //添加时间
     addTime: {type: Date, default: new Date()},
-
-    //阅读数
-    views: {type: Number, default: 0},
 
     //评论
     comments: {

@@ -97,7 +97,7 @@ app.all('/api/*', (req, res, next) => {
     next();
   });
 
-app.use('/', require('./routers/main'));
+// app.use('/', require('./routers/main'));
 app.use('/admin', require('./routers/admin'));
 // app.use('/user', require('./routers/users'));
 app.use('/api', require('./routers/api'));

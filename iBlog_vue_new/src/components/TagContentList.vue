@@ -3,11 +3,11 @@
     <ul class="list-container" v-if="show" transition="fade">
       <!-- eslint-disable-next-line -->
       <li v-for="item in tagContentList">
-        <a router-link="{ name: 'article', params: {id: item.objectId}}">
+        <router-link :to="{ name: 'article', params: {id: item.objectId}}">
           <p class="list-title">{{item.title}}</p>
           <p class="list-updated">{{item.createdAt}}</p>
           <p class="list-abstract">{{item.abstract}}</p>
-        </a>
+        </router-link>
       </li>
     </ul>
   </div>

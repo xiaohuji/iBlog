@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="form" :rules="rules" :model="form" class="login-form">
-      <h2 class="login-title">博客登录</h2>
+      <h2 class="login-title">博客注册</h2>
 
       <el-form-item prop="username" class="input">
         <el-input v-model="form.username" placeholder="账号" prefix-icon="el-icon-user" @keydown.enter.native="onSubmit('form')"></el-input>
@@ -11,23 +11,17 @@
         <el-input type="password" v-model="form.password" placeholder="密码" prefix-icon="el-icon-lock" @keydown.enter.native="onSubmit('form')"></el-input>
       </el-form-item>
 
-      <el-form-item prop="code" class="input">
-        <el-input type="text" v-model="form.code" placeholder="验证码" prefix-icon="el-icon-edit" @keydown.enter.native="onSubmit('form')">
-          <template slot="append">
-            <div class="login-code" @click="refreshCode">
-              <login-code :identifyCode="identifyCode"></login-code>
-            </div>
-          </template>
-        </el-input>
+      <el-form-item prop="pwdagain" class="input">
+        <el-input type="password" v-model="form.pwdagain" placeholder="重复密码" prefix-icon="el-icon-lock" @keydown.enter.native="onSubmit('form')"></el-input>
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit('form')" style="width: 300px;">登录</el-button>
+        <el-button type="primary" @click="onSubmit('form')" style="width: 300px;">注册</el-button>
       </el-form-item>
 
       <el-form-item>
         <div style="float: right;">
-          <router-link to="/register" style="color: white;font-size: 13px;">注册账户</router-link>
+          <router-link to="/login" style="color: white;font-size: 13px;">返回登录</router-link>
         </div>
       </el-form-item>
 
@@ -36,29 +30,18 @@
 </template>
 
 <script type="text/babel">
-import loginCode from './LoginCode'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'login',
-  components: {
-    loginCode
-  },
+  name: 'register',
   created () {
-  },
-  mounted () {
-    // 初始化验证码
-    this.identifyCode = ''
-    this.makeCode(this.identifyCodes, 4)
   },
   data () {
     return {
-      identifyCodes: '1234567890abcdefjhijklinopqrsduvwxyz',
-      identifyCode: '',
       form: {
         username: '',
         password: '',
-        code: ''
+        pwdagain: ''
       },
       rules: {
         username: [
@@ -69,32 +52,17 @@ export default {
           { required: true, message: '密码不能为空', trigger: 'blur' },
           { min: 5, max: 16, message: '密码为5-16位', trigger: 'blur' }
         ],
-        code: [
-          { required: true, message: '请输入验证码', trigger: 'blur' }
+        pwdagain: [
+          { required: true, message: '请输入密码', trigger: 'blur' }
         ]
       }
     }
   },
   computed: {
-    ...mapGetters(['loginCode', 'loginMessage'])
+    ...mapGetters(['registerCode', 'registerMessage'])
   },
   methods: {
-    ...mapActions(['getLogin']),
-    // 重置验证码
-    refreshCode () {
-      this.form.code = ''
-      this.identifyCode = ''
-      this.makeCode(this.identifyCodes, 4)
-    },
-    // 创建验证码
-    makeCode (o, l) {
-      for (let i = 0; i < l; i++) {
-        this.identifyCode += this.identifyCodes[this.randomNum(0, this.identifyCodes.length)]
-      }
-    },
-    randomNum (min, max) {
-      return Math.floor(Math.random() * (max - min) + min)
-    },
+    ...mapActions(['getRegister']),
     onSubmit (form) {
       // eslint-disable-next-line
       // if (localStorage.isLogin == "1") {
@@ -105,7 +73,12 @@ export default {
       //   })
       // } else {
       // eslint-disable-next-line
-      if (true) {
+      if (this.form.password != this.form.pwdagain) {
+        this.$message({
+          type: 'error',
+          message: '密码不一致'
+        })
+      } else {
         this.$refs[form].validate(valid => {
           if (valid) {
             const loading = this.$loading({
@@ -118,34 +91,26 @@ export default {
               loading.close()
               this.$message({
                 type: 'error',
-                message: '登录超时，请确认账号是否存在或稍后访问！'
+                message: '注册超时，请确认网络连接或稍后访问！'
               })
             }, 10000)
             console.log(this.form.username)
-            this.getLogin({
+            this.getRegister({
               username: this.form.username,
               password: this.form.password
             })
-            console.log('login')
             clearTimeout(timer)
-            console.log('code')
+            console.log('register')
             console.log(this.loginCode)
             // loading.close()
             // eslint-disable-next-line
-            if (this.loginCode == 1) {
+            if (this.registerCode == 1) {
               this.$message({
                 type: 'error',
-                message: '账户或密码不正确'
+                message: '账户已存在'
               })
               loading.close()
-            } else if (this.form.code.toLowerCase() !== this.identifyCode.toLowerCase()) {
-              this.$message.error('验证码输入有误！')
-              loading.close()
-              this.refreshCode()
-            // eslint-disable-next-line
-            }
-            // eslint-disable-next-line
-            else if (this.loginCode == 0){
+            } else if (this.registerCode == 0) {
               var storage = window.localStorage
               storage.isLogin = 1
               // window.sessionStorage.userId = res.data.id
@@ -153,11 +118,11 @@ export default {
               // window.sessionStorage.username = res.data.data.bUInfoName
               this.$message({
                 type: 'success',
-                message: '登录成功'
+                message: '注册成功'
               })
               loading.close()
               this.$router.push({
-                path: '/home'
+                path: '/login'
               })
             }
             // getLogin('/login',{
@@ -211,8 +176,6 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  /* background: url("../assets/banner1.jpg") #252424 no-repeat 0 0 scroll;
-  background-size: cover; */
 }
 .login-form {
   width: 350px;

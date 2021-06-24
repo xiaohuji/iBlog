@@ -5,7 +5,7 @@
 </template>
 
 <script>
-export default{
+export default {
   name: 'SIdentify',
   props: {
     identifyCode: { // 默认注册码
@@ -53,15 +53,15 @@ export default{
 
     // 生成一个随机的颜色
     randomColor (min, max) {
-      let r = this.randomNum(min, max)
-      let g = this.randomNum(min, max)
-      let b = this.randomNum(min, max)
+      const r = this.randomNum(min, max)
+      const g = this.randomNum(min, max)
+      const b = this.randomNum(min, max)
       return 'rgb(' + r + ',' + g + ',' + b + ')'
     },
 
     drawPic () {
-      let canvas = document.getElementById('s-canvas')
-      let ctx = canvas.getContext('2d')
+      const canvas = document.getElementById('s-canvas')
+      const ctx = canvas.getContext('2d')
       ctx.textBaseline = 'bottom'
       // 绘制背景
       ctx.fillStyle = '#e6ecfd'
@@ -77,8 +77,8 @@ export default{
     drawText (ctx, txt, i) {
       ctx.fillStyle = this.randomColor(50, 160) // 随机生成字体颜色
       ctx.font = this.randomNum(this.fontSizeMin, this.fontSizeMax) + 'px SimHei' // 随机生成字体大小
-      let x = (i + 1) * (this.contentWidth / (this.identifyCode.length + 1))
-      let y = this.randomNum(this.fontSizeMax, this.contentHeight - 5)
+      const x = (i + 1) * (this.contentWidth / (this.identifyCode.length + 1))
+      const y = this.randomNum(this.fontSizeMax, this.contentHeight - 5)
       var deg = this.randomNum(-30, 30)
       // 修改坐标原点和旋转角度
       ctx.translate(x, y)

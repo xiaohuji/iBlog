@@ -35,15 +35,15 @@ routerApi.use(function (req, res, next) {
 // 返回游客主页内容
 var Value
 routerApi.get('/content-list', function (req, res) {
-    ContentList.find({}).lean().exec((err, docs) => {
+    Content.find({}).lean().exec((err, docs) => {
         Value = []
         for (let item of docs) {
             let result = {}
             console.log(item);
             result.objectId = item._id
             result.title = item.title
-            result.abstract = item.abstract
-            result.createdAt = moment(String(item.createAt)).format('YYYY-MM-DD hh:mm:ss');
+            result.abstract = item.description
+            result.createdAt = moment(String(item.addTime)).format('YYYY-MM-DD hh:mm:ss');
             Value.push(result)
         }
         console.log(Value);
@@ -67,7 +67,7 @@ routerApi.get('/content-list', function (req, res) {
 routerApi.get('/article/:id', function (req, res) {
     console.log('article');
     console.log(req.params.id);
-    ContentList.findOne({"_id":req.params.id}).lean().exec((err, docs) => {
+    Content.findOne({"_id":req.params.id}).lean().exec((err, docs) => {
         console.log('docs');
         console.log(docs);
         let result = {}
@@ -144,32 +144,32 @@ routerApi.post('/user/register', function (req, res, next) {
     var password = req.body.password;
     var repassword = req.body.repassword;
 
-    //用户名判空
-    if (username === '') {
-        responseData.code = '1';
-        responseData.message = '用户名不能为空';
-        res.json(responseData);
-        return;
-    }
-    //密码检测
-    if (password === '' || repassword === '') {
-        responseData.code = '2';
-        responseData.message = '密码不能为空';
-        res.json(responseData);
-        return;
-    }
-    if (password !== repassword) {
-        responseData.code = '3';
-        responseData.message = '两次密码不一致';
-        res.json(responseData);
-        return;
-    }
+    // //用户名判空
+    // if (username === '') {
+    //     responseData.code = '1';
+    //     responseData.message = '用户名不能为空';
+    //     res.json(responseData);
+    //     return;
+    // }
+    // //密码检测
+    // if (password === '' || repassword === '') {
+    //     responseData.code = '2';
+    //     responseData.message = '密码不能为空';
+    //     res.json(responseData);
+    //     return;
+    // }
+    // if (password !== repassword) {
+    //     responseData.code = '3';
+    //     responseData.message = '两次密码不一致';
+    //     res.json(responseData);
+    //     return;
+    // }
     //检测用户名是否已经被注册，如果数据库存在同名数据表示用户名已经被注册
     User.findOne({
         username: username
     }).then(function (userInfo) {
         if (userInfo) {
-            responseData.code = '4';
+            responseData.code = '1';
             responseData.message = '用户名已被注册';
             res.json(responseData);
             return;

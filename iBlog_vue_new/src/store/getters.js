@@ -2,6 +2,9 @@ const getters = {
   loginCode: ({ login }) => login.code,
   loginMessage: ({ login }) => login.message,
 
+  registerCode: ({ register }) => register.regcode,
+  registerMessage: ({ register }) => register.regmessage,
+
   contentList: ({ contentList }) => contentList.contentList,
   headline: ({ headline }) => headline.headline,
 

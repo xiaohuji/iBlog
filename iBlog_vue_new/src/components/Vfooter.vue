@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p> xxx</p>
+    <p> 现学现卖ing</p>
   </div>
 </template>
 

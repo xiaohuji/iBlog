@@ -21,16 +21,19 @@
       <router-link :to="'/home'">主页</router-link>
     </li>
     <li>
-      <router-link :to="'/about'">关于</router-link>
-    </li>
-    <li>
       <router-link :to="'/tags'">板块</router-link>
     </li>
     <li>
       <router-link :to="'/login'">登录</router-link>
     </li>
     <li>
+      <router-link :to="'/register'">注册</router-link>
+    </li>
+    <li>
       <a href="http://localhost:3001/admin">管理</a>
+    </li>
+    <li>
+      <router-link :to="'/about'">关于</router-link>
     </li>
   </ul>
   <div class="header-title"><h1 v-if="show" transition="fade">{{headlineFinal}}</h1></div>

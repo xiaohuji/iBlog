@@ -16,6 +16,18 @@ const actions = {
         commit(types.GET_LOGIN_FAILURE, error)
       })
   },
+  // 注册
+  getRegister ({ commit }, userdata) {
+    commit(types.REQUEST_REGISTER)
+    axios.post(API_ROOT + 'api/user/register/', userdata)
+      .then(response => {
+        console.log(response.data)
+        // dispatch(types.GET_CONTENT_LIST, response.data)
+        commit(types.GET_REGISTER, response.data)
+      }, error => {
+        commit(types.GET_REGISTER_FAILURE, error)
+      })
+  },
   // 获取内容
   getContentList ({ commit }) {
     commit(types.REQUEST_CONTENT_LIST)

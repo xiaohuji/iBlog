@@ -18,6 +18,7 @@
             <th>用户名</th>
             <th>密码</th>
             <th>是否是超级管理员</th>
+            <th>操作</th>
         </tr>
         <!---->
         {% for user in users %}
@@ -29,6 +30,9 @@
                 {% if user.isSuperAdmin %}
                 是
                 {% endif %}
+            </td>
+            <td>
+                <a href="/admin/user/delete?id={{user._id.toString()}}">删除</a>
             </td>
         </tr>
         {% endfor %}

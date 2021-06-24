@@ -28,7 +28,7 @@ var routerAdmin = express.Router();
 var User = require('../models/User');//用户模型
 var Category = require('../models/Category');//分类模型
 var Content = require('../models/Content');//内容模型
-var ContentList = require('../models/ContentList');
+// var ContentList = require('../models/ContentList');
 //
 routerAdmin.use(function (req, res, next) {
     //对进入用户身份进行验证
@@ -68,7 +68,7 @@ routerAdmin.get('/user', function (req, res, next) {
     var reqPage = Number((req.query.page) === undefined ? 0 : req.query.page);
     // console.log(reqPage);
     var page = reqPage <= 0 ? 1 : reqPage;
-    var limit = 2;
+    var limit = 10;
     var pages = 0;
     var skip = (page - 1) * limit;
     //
@@ -96,7 +96,7 @@ routerAdmin.get('/category', function (req, res, next) {
     // 从数据库中读取所有分类数据
     var reqPage = Number((req.query.page) === undefined ? 0 : req.query.page);
     var page = reqPage <= 0 ? 1 : reqPage;
-    var limit = 2;
+    var limit = 10;
     var pages = 0;
     var skip = (page - 1) * limit;
     //
@@ -117,8 +117,29 @@ routerAdmin.get('/category', function (req, res, next) {
             });
         });
     });
-
-
+});
+//用户删除
+routerAdmin.get('/user/delete', function (req, res) {
+    //获取要删除的分类ID
+    var id = req.query.id;
+    console.log('delete');
+    console.log(id);
+    Content.remove({
+        user: id
+    }).then(function () {
+        console.log('deleteContent');
+    });
+    User.remove({
+        _id: id
+    }).then(function () {
+        console.log('delete2');
+        console.log(id);
+        res.render('admin/success', {
+            userInfo: req.userInfo,
+            message: '删除成功',
+            url: '/admin/user'
+        })
+    });
 });
 //分类添加页面
 routerAdmin.get('/category/add', function (req, res, next) {
@@ -275,7 +296,7 @@ routerAdmin.get('/content', function (req, res, next) {
     // 从数据库中读取所有分类数据
     var reqPage = Number((req.query.page) === undefined ? 0 : req.query.page);
     var page = reqPage <= 0 ? 1 : reqPage;
-    var limit = 2;
+    var limit = 10;
     var pages = 0;
     var skip = (page - 1) * limit;
     //
@@ -330,15 +351,16 @@ routerAdmin.post('/content/add', function (req, res, next) {
             user: req.userInfo._id.toString(),
             title: postData.title,
             description: postData.description,
-            content: postData.content
+            content: postData.content,
+            username: req.userInfo.username
         });
-        var newContentList = new ContentList({
-            title: postData.title,
-            abstract: postData.description,
-            content: postData.content
-        });
-        newContentList.save()
-        console.log(newContentList);
+        // var newContentList = new ContentList({
+        //     title: postData.title,
+        //     abstract: postData.description,
+        //     content: postData.content
+        // });
+        // newContentList.save()
+        // console.log(newContentList);
         newContent.save().then(function (rs) {
             res.render('admin/success', {
                 userInfo: req.userInfo,

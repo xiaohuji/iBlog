@@ -7,8 +7,10 @@ import tags from './modules/tags'
 import tagContentList from './modules/tagContentList'
 import commentsList from './modules/commentsList'
 import login from './modules/login'
+import register from './modules/register'
 import actions from './actions'
 import getters from './getters'
+
 // import mutations from './mutations'
 // import state from './state'
 
@@ -26,7 +28,8 @@ export default new Vuex.Store({
     tags,
     tagContentList,
     commentsList,
-    login
+    login,
+    register
   },
   actions,
   getters

@@ -62,11 +62,17 @@ const routes = [
     }
   },
   {
-    // path: '/login/:usernemr/:message',
     path: '/login',
     name: 'login',
     component: function (resolve) {
       require(['./components/Login'], resolve)
+    }
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: function (resolve) {
+      require(['./components/Register'], resolve)
     }
   }
 ]

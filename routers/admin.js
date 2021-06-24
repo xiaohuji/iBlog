@@ -32,8 +32,9 @@ var ContentList = require('../models/ContentList');
 //
 routerAdmin.use(function (req, res, next) {
     //对进入用户身份进行验证
+    console.log(req.userInfo.isAdmin);
     if (!req.userInfo.isAdmin) {
-        res.send('你不是管理员，不能访问后台管理！');
+        res.render('admin/notAdmin');
         return;
     }
     next();
@@ -439,7 +440,7 @@ routerAdmin.get('/content/delete', function (req, res, next) {
 //退出
 routerAdmin.get('/logout', function (req, res) {
     req.cookies.set('userInfo', null);
-    res.render('main/mainIndex', {});
+    res.render('admin/logout', {});
 });
 
 module.exports = routerAdmin;

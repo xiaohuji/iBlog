@@ -18,6 +18,7 @@ const moment = require('moment')
 var User = require('../models/User');
 var Content = require('../models/Content');
 var ContentList = require('../models/ContentList');
+const Category = require('../models/Category');
 
 // var responseData = require('../models/ReturnDataFormat');
 
@@ -102,6 +103,41 @@ routerApi.get('/article/:id', function (req, res) {
  *      2、密码不能为空 // 两次密码需一样
  */
 
+// 返回板块
+routerApi.get('/tags', function (req, res) {
+    Category.find({}).lean().exec((err, docs) => {
+        Value = []
+        for (let item of docs) {
+            let result = {}
+            console.log(item);
+            result.objectId = item._id
+            result.name = item.name
+            Value.push(result)
+        }
+        console.log(Value);
+        res.json(Value);
+      })
+    return;
+});
+
+// 返回板块的内容
+routerApi.get('/tags/:tagid', function (req, res) {
+    Content.find({"category":req.params.tagid}).lean().exec((err, docs) => {
+        Value = []
+        for (let item of docs) {
+            let result = {}
+            console.log(item);
+            result.objectId = item._id
+            result.title = item.title
+            result.abstract = item.description
+            result.createdAt = moment(String(item.addTime)).format('YYYY-MM-DD hh:mm:ss');
+            Value.push(result)
+        }
+        console.log(Value);
+        res.json(Value);
+      })
+    return;
+});
 //注册接口
 routerApi.post('/user/register', function (req, res, next) {
     var username = req.body.username;
@@ -160,8 +196,11 @@ routerApi.post('/user/register', function (req, res, next) {
 });
 //用户登录
 routerApi.post('/user/login', function (req, res, next) {
+    console.log(req);
     var uName = req.body.username;
     var pWord = req.body.password;
+    console.log(uName);
+    console.log(pWord);
     //空值等检测放在前端处理
 
     //后台数据验证处理

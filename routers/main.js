@@ -32,7 +32,7 @@ router.use(function (req, res, next) {
         next();
     })
 });
-//程序主入口 Login /register
+// 程序主入口 Login /register
 
 router.get('/', function (req, res, next) {
     // console.log('渲染首页模板的用户数据 ' + JSON.stringify(req.userInfo));
@@ -49,10 +49,10 @@ router.get('/', function (req, res, next) {
     if (data.category) {
         whereStr.category = data.category;
     }
-    //如果用户未登录//游客 则只显示 首页--即无自己定制版块
+    // 如果用户未登录//游客 则只显示 首页--即无自己定制版块
 
 
-    //读取某用户所有分类信息
+    // 读取某用户所有分类信息
     Category.find().where(whereStr).then(function (count) {
 
         data.count = count;

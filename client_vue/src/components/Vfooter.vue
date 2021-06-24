@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Copyrights © 2016 将就. All Rights Reserved.</p>
+    <p> xxx</p>
   </div>
 </template>
 

@@ -13,43 +13,43 @@
 </template>
 
 <script type="text/babel">
-  import { tagContentList, tagContentListId, tags } from '../vuex/getters'
-  import { getTagContentList, updateHeadline } from '../vuex/actions'
+import { tagContentList, tagContentListId, tags } from '../vuex/getters'
+import { getTagContentList, updateHeadline } from '../vuex/actions'
 
-  export default {
-    data () {
-      return {
-        show: true,
-        finalItems: []
-      }
+export default {
+  data () {
+    return {
+      show: true,
+      finalItems: []
+    }
+  },
+  vuex: {
+    getters: {
+      items: tagContentList,
+      tagId: tagContentListId,
+      tags: tags
     },
-    vuex: {
-      getters: {
-        items: tagContentList,
-        tagId: tagContentListId,
-        tags: tags
-      },
-      actions: {
-        getTagContentList: getTagContentList,
-        updateHeadline: updateHeadline
-      }
+    actions: {
+      getTagContentList: getTagContentList,
+      updateHeadline: updateHeadline
+    }
+  },
+  watch: {
+    'items': function (val, oldVal) {
+      this.show = false
+      setTimeout(() => {
+        this.show = true
+        this.finalItems = val
+      }, 400)
     },
-    watch: {
-      'items': function (val, oldVal) {
-        this.show = false
-        setTimeout(() => {
-          this.show = true
-          this.finalItems = val
-        }, 400)
-      },
-      'tags': function (val) {
-        if (val) {
-          this.getTagContentList(val[0].objectId)
-          this.updateHeadline(val[0].tagName)
-        }
+    'tags': function (val) {
+      if (val) {
+        this.getTagContentList(val[0].objectId)
+        this.updateHeadline(val[0].tagName)
       }
     }
   }
+}
 </script>
 
 <style>

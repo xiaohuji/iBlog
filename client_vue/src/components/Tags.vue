@@ -15,50 +15,50 @@
 </template>
 
 <script type="text/babel">
-  import { updateHeadline, getTags, getTagContentList } from '../vuex/actions'
-  import { tags } from '../vuex/getters'
+import { updateHeadline, getTags, getTagContentList } from '../vuex/actions'
+import { tags } from '../vuex/getters'
 
-  export default {
-    components: {
-      TagContentList: function (resolve) {
-        require(['./TagContentList'], resolve)
-      }
+export default {
+  components: {
+    TagContentList: function (resolve) {
+      require(['./TagContentList'], resolve)
+    }
+  },
+  data () {
+    return {
+      selected: 0
+    }
+  },
+  vuex: {
+    getters: {
+      tags: tags
     },
-    data () {
-      return {
-        selected: 0
-      }
+    actions: {
+      updateHeadline: updateHeadline,
+      getTags: getTags,
+      getTagContentList: getTagContentList
+    }
+  },
+  created () {
+    this.getTags()
+  },
+  methods: {
+    update (index, tagName, tagId) {
+      this.selected = index
+      this.updateHeadline(tagName)
+      this.getTagContentList(tagId)
     },
-    vuex: {
-      getters: {
-        tags: tags
-      },
-      actions: {
-        updateHeadline: updateHeadline,
-        getTags: getTags,
-        getTagContentList: getTagContentList
-      }
-    },
-    created () {
-      this.getTags()
-    },
-    methods: {
-      update (index, tagName, tagId) {
-        this.selected = index
-        this.updateHeadline(tagName)
-        this.getTagContentList(tagId)
-      },
-      watch: {
-        'tags': function (val, oldVal) {
-          console.log(oldVal)
-          if (val) {
-            this.updateHeadline(val[0].tagName)
-            console.log(2211)
-          }
+    watch: {
+      'tags': function (val, oldVal) {
+        console.log(oldVal)
+        if (val) {
+          this.updateHeadline(val[0].tagName)
+          console.log(2211)
         }
       }
     }
   }
+}
 </script>
 
 <style>

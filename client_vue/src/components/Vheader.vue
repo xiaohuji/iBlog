@@ -17,6 +17,21 @@
       <li>
         <a v-link="'/tags'">管理</a>
       </li>
+        <!-- <li>
+          <a router-link="'/home'">主页</a>
+        </li>
+        <li>
+          <a router-link="'/about'">关于</a>
+        </li>
+        <li>
+          <a router-link="'/tags'">标签</a>
+        </li>
+        <li>
+          <a router-link="'/login'">登录</a>
+        </li>
+        <li>
+          <a router-link="'/tags'">管理</a>
+        </li> -->
       
     </ul>
     <div class="header-title"><h1 v-if="show" transition="fade">{{headlineFinal}}</h1></div>
@@ -24,55 +39,55 @@
 </template>
 
 <script type="text/babel">
-  import { headline } from '../vuex/getters'
+import { headline } from '../vuex/getters'
 
-  export default {
-    data () {
-      return {
-        show: true,
-        nav: 'nav',
-        isTop: true,
-        isVisible: true,
-        headlineFinal: ''
-      }
-    },
-    vuex: {
-      getters: {
-        headline: headline
-      }
-    },
-    watch: {
-      'headline': function (val, oldVal) {
-        this.show = false
-        setTimeout(() => {
-          this.show = true
-          this.headlineFinal = val
-        }, 400)
-      }
-    },
-    ready () {
-      this.scroll()
-    },
-    methods: {
-      scroll () {
-        let beforeScrollTop = document.body.scrollTop
+export default {
+  data () {
+    return {
+      show: true,
+      nav: 'nav',
+      isTop: true,
+      isVisible: true,
+      headlineFinal: ''
+    }
+  },
+  vuex: {
+    getters: {
+      headline: headline
+    }
+  },
+  watch: {
+    'headline': function (val, oldVal) {
+      this.show = false
+      setTimeout(() => {
+        this.show = true
+        this.headlineFinal = val
+      }, 400)
+    }
+  },
+  ready () {
+    this.scroll()
+  },
+  methods: {
+    scroll () {
+      let beforeScrollTop = document.body.scrollTop
 
-        window.onscroll = () => {
-          const afterScrollTop = document.body.scrollTop
-          const delta = afterScrollTop - beforeScrollTop
+      window.onscroll = () => {
+        const afterScrollTop = document.body.scrollTop
+        const delta = afterScrollTop - beforeScrollTop
 
-          this.isTop = afterScrollTop === 0
+        this.isTop = afterScrollTop === 0
 
-          if (delta === 0) return false
-          beforeScrollTop = afterScrollTop
-          this.isVisible = delta <= 0
-          if (afterScrollTop < 48) {
-            this.isVisible = true
-          }
+        if (delta === 0) return false
+        beforeScrollTop = afterScrollTop
+        this.isVisible = delta <= 0
+        if (afterScrollTop < 48) {
+          this.isVisible = true
         }
       }
     }
   }
+}
 </script>
 
 <style scoped>

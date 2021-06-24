@@ -36,76 +36,76 @@
 </template>
 
 <script type="text/babel">
-  import { getCommentsList, submitComment } from '../vuex/actions'
-  import { commentsList } from '../vuex/getters'
+import { getCommentsList, submitComment } from '../vuex/actions'
+import { commentsList } from '../vuex/getters'
 
-  export default {
-    data () {
-      return {
-        formName: '',
-        formContent: '',
-        formReply: '',
-        replyName: '',
-        articleId: this.$route.params.id
-      }
+export default {
+  data () {
+    return {
+      formName: '',
+      formContent: '',
+      formReply: '',
+      replyName: '',
+      articleId: this.$route.params.id
+    }
+  },
+  vuex: {
+    actions: {
+      getCommentsList: getCommentsList,
+      submitComment: submitComment
     },
-    vuex: {
-      actions: {
-        getCommentsList: getCommentsList,
-        submitComment: submitComment
-      },
-      getters: {
-        commentsList: commentsList
-      }
-    },
-    created () {
-      this.getCommentsList(this.articleId)
-    },
-    computed: {
-      finalCommentsList () {
-        return this.commentsList.map((item, index, arr) => {
-          if (item.reply) {
-            const replyToId = item.reply
-            let obj = {}
-            let reply = arr.find(data => data.objectId === replyToId)
-            obj.objectId = item.objectId
-            obj.name = item.name
-            obj.createdAt = item.createdAt
-            obj.content = item.content
-            obj.reply = reply
+    getters: {
+      commentsList: commentsList
+    }
+  },
+  created () {
+    this.getCommentsList(this.articleId)
+  },
+  computed: {
+    finalCommentsList () {
+      return this.commentsList.map((item, index, arr) => {
+        if (item.reply) {
+          const replyToId = item.reply
+          let obj = {}
+          let reply = arr.find(data => data.objectId === replyToId)
+          obj.objectId = item.objectId
+          obj.name = item.name
+          obj.createdAt = item.createdAt
+          obj.content = item.content
+          obj.reply = reply
 
-            return obj
-          }
-          return item
-        })
+          return obj
+        }
+        return item
+      })
+    }
+  },
+  methods: {
+    submit () {
+      if (!this.formName.trim() || !this.formContent.trim()) {
+        window.alert('昵称和内容不可为空')
+        return
       }
+      const data = {
+        name: this.formName,
+        content: this.formContent,
+        reply: this.formReply,
+        articleId: this.articleId
+      }
+      this.submitComment(data)
+      this.formName = ''
+      this.formContent = ''
+      this.replyName = ''
+      this.formReply = ''
     },
-    methods: {
-      submit () {
-        if (!this.formName.trim() || !this.formContent.trim()) {
-          window.alert('昵称和内容不可为空')
-          return
-        }
-        const data = {
-          name: this.formName,
-          content: this.formContent,
-          reply: this.formReply,
-          articleId: this.articleId
-        }
-        this.submitComment(data)
-        this.formName = ''
-        this.formContent = ''
-        this.replyName = ''
-        this.formReply = ''
-      },
-      reply (replyToId, replyToName) {
-        this.replyName = replyToName
-        window.location.hash = ''
-        window.location.hash = 'firstAnchor'
-        this.formReply = replyToId
-      }
+    reply (replyToId, replyToName) {
+      this.replyName = replyToName
+      window.location.hash = ''
+      window.location.hash = 'firstAnchor'
+      this.formReply = replyToId
     }
   }
+}
 </script>
 
 <style>

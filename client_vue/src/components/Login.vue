@@ -1,6 +1,5 @@
 <template>
   <div class="login">
-<!--    <router-link to="/userbasicInfo">进</router-link>-->
     <el-form ref="form" :rules="rules" :model="form" class="login-form">
       <h2 class="login-title">博客登录</h2>
 
@@ -36,9 +35,10 @@
 
     </el-form>
   </div>
+  
 </template>
 
-<script>
+<script type="text/babel">
 import loginCode from './LoginCode'
 
 export default {

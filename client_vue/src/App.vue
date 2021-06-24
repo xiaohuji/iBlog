@@ -1,8 +1,8 @@
 <template>
-  <div id="wrapper">
+  <div id="app">
     <vheader class="header"></vheader>
     <div class="main">
-      <router-view class="main-wrapper" transition="fade" transition-mode="out-in"></router-view>
+      <router-view class="main-wrapper" keep-alive transition transition-mode="out-in"></router-view>
     </div>
     <vfooter class="footer"></vfooter>
   </div>
@@ -15,6 +15,7 @@
   import Store from './vuex/store'
 
   export default {
+    name: 'App',
     components: {
       Vheader,
       Vfooter

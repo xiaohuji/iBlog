@@ -14,24 +14,24 @@
 </template>
 
 <script type="text/babel">
-  import {contentList} from '../vuex/getters'
-  import {getContentList, updateHeadline} from '../vuex/actions'
+import {contentList} from '../vuex/getters'
+import {getContentList, updateHeadline} from '../vuex/actions'
 
-  export default {
-    vuex: {
-      getters: {
-        items: contentList
-      },
-      actions: {
-        getList: getContentList,
-        updateHeadline: updateHeadline
-      }
+export default {
+  vuex: {
+    getters: {
+      items: contentList
     },
-    created () {
-      this.getList()
-      this.updateHeadline('博客')
+    actions: {
+      getList: getContentList,
+      updateHeadline: updateHeadline
     }
+  },
+  created () {
+    this.getList()
+    this.updateHeadline('博客')
   }
+}
 </script>
 
 <style>

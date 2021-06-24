@@ -1,0 +1,12 @@
+<!--继承 layout 模板 复用头部尾部等页面区域-->
+{% extends 'layout.html' %}
+
+{% block main %}
+<div class="jumbotron">
+    <!-- <hr>
+    管理首页
+    <hr> -->
+    <h2>你不是管理员，不能访问后台管理！</h2>
+    <li><a href="http://localhost:8080">返回博客界面</a></li>
+</div>
+{% endblock %}

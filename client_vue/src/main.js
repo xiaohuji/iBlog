@@ -1,26 +1,56 @@
+/* eslint-disable no-new */
+import Element from 'element-ui'
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import FastClick from 'fastclick'
-import ElementUI from 'element-ui'
+// import './plugins/element.js'
 import 'element-ui/lib/theme-chalk/index.css'
 
+Vue.use(Element)
+// import router from './router/index.js'
+
+// new Vue({
+//   // el: '#app',
+//   // router,
+//   // store,
+//   components: { App },
+//   template: '<App/>',
+//   render: h => h(App)
+// }).$mount('#app')
+// new Vue({
+//   el: '#app',
+//   router,
+//   components: { App },
+//   template: '<App/>',
+//   render: h => h(App)
+// })
+
 // 注册两个插件
+
 Vue.use(VueResource)
 Vue.use(VueRouter)
-Vue.use(ElementUI)
 Vue.http.options.emulateJSON = true
+
+// new Vue({
+  // el: '#app'
+  // router,
+  // store,
+  // components: { App },
+  // template: '<App/>'
+  // render: h => h(App)
+// })
+// new Vue({
+//   el: 'body'
+//   // store,
+// })
+// var App = Vue.extend({});
 
 const router = new VueRouter({
   history: true,
   hashbang: false
 })
-
-// new Vue({
-//   el: '#app',
-//   render: h => h(App)
-// })
 
 FastClick.attach(window.document.body)
 // 路由map
@@ -58,5 +88,15 @@ router.map({
 router.redirect({
   '*': '/home'
 })
-
+// var App = Vue.extend({})
 router.start(App, '#app')
+
+// new Vue({
+//   router,
+//   // store,
+//   render: h => h(App)
+// }).$mount('#app')
+new Vue({
+  el: '#app'
+  // render: h => h(App)
+})

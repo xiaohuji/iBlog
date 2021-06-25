@@ -1,23 +1,9 @@
-/**
- * Created by zhangyi on 2017/5/25.
- */
-
-/*
- *   api 模块//接口路由
- *   /                            首页
- *   /register                    用户注册
- *   /login                       用户登录
- *   /comment                     评论获取
- *   /comment/post                评论提交
- */
-
 var express = require('express');
 var routerApi = express.Router();
 const moment = require('moment')
 
 var User = require('../models/User');
 var Content = require('../models/Content');
-var ContentList = require('../models/ContentList');
 const Category = require('../models/Category');
 
 // var responseData = require('../models/ReturnDataFormat');
@@ -42,6 +28,7 @@ routerApi.get('/content-list', function (req, res) {
             console.log(item);
             result.objectId = item._id
             result.title = item.title
+            result.username = item.username
             result.abstract = item.description
             result.createdAt = moment(String(item.addTime)).format('YYYY-MM-DD hh:mm:ss');
             Value.push(result)
@@ -72,6 +59,7 @@ routerApi.get('/article/:id', function (req, res) {
         console.log(docs);
         let result = {}
         result.content = docs.content
+        result.title = docs.title
         console.log(result);
         res.json(result);
       })

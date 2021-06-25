@@ -50,6 +50,8 @@ const actions = {
   //  获取文章内容, 清除文章
   getArticle ({ commit }, id) {
     axios.get(API_ROOT + 'api/article/' + id).then(response => {
+      console.log('aarticle')
+      console.log(response.data)
       commit(types.GET_ARTICLE, response.data)
     }, error => {
       commit(types.GET_ARTICLE_FAILURE, error)

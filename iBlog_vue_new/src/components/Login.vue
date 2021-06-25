@@ -1,8 +1,6 @@
 <template>
-  <div class="login">
+  <div class="login-wrapper">
     <el-form ref="form" :rules="rules" :model="form" class="login-form">
-      <h2 class="login-title">博客登录</h2>
-
       <el-form-item prop="username" class="input">
         <el-input v-model="form.username" placeholder="账号" prefix-icon="el-icon-user" @keydown.enter.native="onSubmit('form')"></el-input>
       </el-form-item>
@@ -45,6 +43,7 @@ export default {
     loginCode
   },
   created () {
+    this.updateHeadline('用户登录')
   },
   mounted () {
     // 初始化验证码
@@ -79,7 +78,7 @@ export default {
     ...mapGetters(['loginCode', 'loginMessage'])
   },
   methods: {
-    ...mapActions(['getLogin']),
+    ...mapActions(['getLogin', 'updateHeadline']),
     // 重置验证码
     refreshCode () {
       this.form.code = ''

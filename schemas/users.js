@@ -1,7 +1,3 @@
-/**
- * Created by zhangyi on 2017/5/26.
- */
-
 var mongoose = require('mongoose');
 
 //用户表结构

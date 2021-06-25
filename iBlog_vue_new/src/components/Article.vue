@@ -39,6 +39,7 @@ export default {
   computed: {
     ...mapGetters(['article']),
     content: function () {
+      console.log(this.article)
       this.updateHeadline(this.article.title)
       let _content = this.article.content
       marked(_content, (err, content) => {
@@ -66,7 +67,7 @@ export default {
 
   .article pre {
     padding: 1rem;
-    font: 14px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font: 24px Consolas, "Liberation Mono", Menlo, Courier, monospace;
     background-color: #f7f7f7;
     white-space: pre-wrap;
     overflow: auto;

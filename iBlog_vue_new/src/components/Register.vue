@@ -1,7 +1,6 @@
 <template>
-  <div class="login">
+  <div class="register-wrapper">
     <el-form ref="form" :rules="rules" :model="form" class="login-form">
-      <h2 class="login-title">博客注册</h2>
 
       <el-form-item prop="username" class="input">
         <el-input v-model="form.username" placeholder="账号" prefix-icon="el-icon-user" @keydown.enter.native="onSubmit('form')"></el-input>
@@ -35,6 +34,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'register',
   created () {
+    this.updateHeadline('用户注册')
   },
   data () {
     return {
@@ -62,7 +62,7 @@ export default {
     ...mapGetters(['registerCode', 'registerMessage'])
   },
   methods: {
-    ...mapActions(['getRegister']),
+    ...mapActions(['getRegister', 'updateHeadline']),
     onSubmit (form) {
       // eslint-disable-next-line
       // if (localStorage.isLogin == "1") {
@@ -101,7 +101,7 @@ export default {
             })
             clearTimeout(timer)
             console.log('register')
-            console.log(this.loginCode)
+            console.log(this.registerCode)
             // loading.close()
             // eslint-disable-next-line
             if (this.registerCode == 1) {

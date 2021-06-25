@@ -1,27 +1,3 @@
-/**
- * Created by zhangyi on 2017/5/25.
- */
-
-/*
- *   admin 模块//管理模块
- *   /                            首页
- *   ##用户管理
- *   /user                        用户列表
- *   ##分类管理
- *   /category                    分类列表
- *   /category/add                分类添加
- *   /category/edit               分类修改
- *   /category/delete             分类删除
- *   ##文章内容管理
- *   /article                     文章列表
- *   /article/add                 文章添加
- *   /article/edit                文章编辑
- *   /article/delete              文章删除
- *   ##评论内容管理
- *   /comment                     评论列表
- *   /comment/delete              评论删除
- */
-
 var express = require('express');
 var routerAdmin = express.Router();
 

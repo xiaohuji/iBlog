@@ -1,11 +1,17 @@
 
-#### iBlog 开发文档及模块说明 TODO
+#### iBlog 开发文档及模块说明 
 
 Blog 个人博客系统
 
-一开始框架参考于：https://github.com/Zhangyei/iBlog  
-ISC许可证与BSD差不多  
+一开始框架参考于：
+
+https://github.com/Zhangyei/iBlog & https://github.com/jiangjiu/vue-leancloud-blog
+ISC许可证与MIT许可证  
 谢谢大佬的开源  
+
+取其精华、去其糟粕
+
+用最新的版本的框架进行重构
 
 ########################################  
 
@@ -20,7 +26,7 @@ ISC许可证与BSD差不多
 现在在此之上做出一些重构和改进，前后端分离  
 6.16
 
-前端（游客界面）找了一个简介好看的模板开始研读  
+前端（游客界面）找了一个简洁好看的模板开始研读  
 6.17
 
 vue双向绑定真香  
@@ -100,6 +106,8 @@ axios已经默认不使用cookies了，我查了半天
 
 已经熟练使用vuex了
 
+完成内容板块管理
+
 完成注册功能
 
 真的快气晕了，终于实现了跟管理端的连接，然后发现有几个UI按钮没有出现，de了三小时bug，最后发现是因为虚拟机窗口太小了，把按钮挤没了，根本不是程序里没有把他展示出来，这种错误真的debug de的我怀疑人生[裂开]
@@ -107,6 +115,10 @@ axios已经默认不使用cookies了，我查了半天
 整个博客终于有一点像样了哈哈哈哈
 
 完成用户登录功能
+
+开始比较得心应手了
+
+出现bug基本都知道怎么找、要怎么改了
 
 完成权限功能
 
@@ -124,56 +136,271 @@ axios已经默认不使用cookies了，我查了半天
 
 解决用户删除不完整bug
 
+解决article不显示headTitle的bug
+
+解决了一些样式问题
 
 
 
 
 
+**###系统说明**
 
+**一个博客系统**
 
+前端使用：
 
-###模块说明.
+​					vue
 
-####路由实现等说明
+​					bootstrap
 
-##### api 接口路由
-	 / 				首页
-	 /register    用户注册
-	 /login      用户登录
-	 /comment    评论获取
-	 /comment/post  评论提交
+​					element-ui
 
+​					vue-router
 
-​	 
-##### main 模块
-	/                首页
-	/view            内容页
+​					vuex
+
+​					axios
+
+​					fastclick
+
+后端使用
+
+​					nodejs
+
+​					mongoDB
+
+具体版本请参考系统文件夹内：package.json文件
+
+**###模块说明**
+
+##### user模块//游客模块
+	 /home 			主页
+	 /tags          板块
+	 /register      用户注册
+	 /login         用户登录
+	 /admin         系统管理
+	 /about         关于
 
 
 ##### admin 模块//管理模块
-	   /                            首页
-	  ##用户管理
+	  /                            首页
+	  ##用户管理（超级用户）
 	  /user                        用户列表
+	  /user/delete                 用户删除
 	  ##分类管理
 	  /category                    分类列表
 	  /category/add                分类添加
 	  /category/edit               分类修改
 	  /category/delete             分类删除
 	  ##文章内容管理
-	 /article                     文章列表
-	 /article/add                 文章添加
-	 /article/edit                文章编辑
-	 /article/delete              文章删除
-	 ##评论内容管理
-	 /comment                     评论列表
-	 /comment/delete              评论删除
+	  /article                     文章列表
+	  /article/add                 文章添加
+	  /article/edit                文章编辑
+	  /article/delete              文章删除
 
 
-​     
-​     
-  ####模块说明TODO
+  **####数据库说明**
+
+使用MongoDB
+
+```
+ user：							用户表
+ 
+ 	_id							用户id
+ 	username: String			用户名
+    password: String            密码 
+    isSuperAdmin: {				是否是超级管理员
+        type: Boolean,
+        default: false
+    }
+    isAdmin: {					是否是管理员
+        type: Boolean,
+        default: false
+     
+ 样例：
+ { "_id" : ObjectId("60c74acc26f44e0cbdd12660"), "isSuperAdmin" : false, "isAdmin" : true, "username" : "sy", "password" : "123456", "__v" : 0 }
+ 
+ #####################################################################
+ 
+ category										板块表
+ 
+    _id											内容id
+ 	name:String									板块名称
+ 	
+  样例：
+  { "_id" : ObjectId("60d449a5c3fcce30c144ce47"), "name" : "spark", "__v" : 0 }
+
+ #####################################################################
+ 
+ content										文章内容表
+ 
+ 	_id											内容id
+    category: {									关联字段  分类的ID
+        type: mongoose.Schema.Types.ObjectId,	关联category表中的ID 字段
+        ref: 'Category'							
+    }
+    user: {
+        type: mongoose.Schema.Types.ObjectId,	关联user表中的ID 字段
+        ref: 'User'								
+    }
+    title: String								内容标题
+    username: String							作者名字
+    description: {type: String, default: ''}	简介
+    content: {type: String, default: ''}		内容
+    addTime: {type: Date, default: new Date()}	添加时间
+    
+  样例：
+  { "_id" : ObjectId("60d440b4fb9ad92b6dd2ab67"), "description" : "6241521", "content" : "6241521", "addTime" : ISODate("2021-06-24T08:21:32.044Z"), "comments" : [ ], "category" : ObjectId("60c74afa26f44e0cbdd12661"), "user" : ObjectId("60d42c18ee38591ec8ab21ff"), "title" : "6241521", "username" : "admin", "__v" : 0 }
+ ################################################################
+```
 
 
-  ####后期模块优化等记录TODO...
+
+  **####系统启动**
+
+**数据库：**
+
+启动mongoDB：
+
+端口设置为：8001
+
+默认连接为：mongodb://localhost/myMongoose
+
+连接设置可在app.js文件末尾进行更改
+
+**后端：**
+
+在iBlog文件夹下打开终端：
+
+输入 npm install
+
+再打开vscode 点击run->nodejs即可
+
+启动成功将会显示：
+
+<img src="image-20210624073043956.png" alt="image-20210624073043956" style="zoom:50%;" />
+
+后端端口默认：localhost：3001（不建议更改，应该更改后前端也需要更改）
+
+连接mongoDB端口默认：8081
+
+可在app.js文件末尾进行更改
+
+###########################################################
+
+**前端：**
+
+在iBlog_vue_new文件夹下打开终端：
+
+输入 npm install
+
+再输入npm run serve即可
+
+启动成功将会显示：
+
+![image-20210624072918932](image-20210624072918932.png)
+
+#############################################################
+
+前后端启动成功后
+
+再浏览器内输入localhost:8080可显示：
+
+![image-20210624081608525](image-20210624081608525.png)
+
+**####博客使用：**
+
+**内容**
+
+首页可点击内容，跳转到各个文章内：
+
+![image-20210624093357280](image-20210624093357280.png)
+
+**板块**
+
+可以在不同主题直接切换:
+
+![image-20210624093556288](image-20210624093556288.png)
+
+**登录界面**
+
+验证码看不清点击可切换
+
+账户密码错误、账号密码长度不符合、验证码错误、会出现提示：
+
+<img src="image-20210624094010536.png" alt="image-20210624094010536" style="zoom: 25%;" />
+
+**注册界面**
+
+账号密码长度不符合、两次密码不正确或者账户已存在将会报错：
+
+<img src="image-20210624094354528.png" alt="image-20210624094354528" style="zoom:33%;" />
 
 
+
+**关于**
+
+可以显示关于博客各种东西，如Github连接
+
+![image-20210624100536965](image-20210624100536965.png)
+
+**管理**
+
+管理端需登录后才能访问，否则出现：
+
+![image-20210624091046297](image-20210624091046297.png)
+
+**超级管理员**
+
+！！！！注意：
+
+账号：admin
+
+密码：admin
+
+为超级管理员
+
+只有超级管理员有用户管理权限
+
+超级管理员界面为：
+
+![image-20210624095005326](image-20210624095005326.png)
+
+**用户管理**
+
+可以对用户进行删除，删除用户后，该用户的所有文章都将会被删除！
+
+![image-20210624095310352](image-20210624095310352.png)
+
+**普通管理员**
+
+无用户管理功能
+
+![image-20210624095410711](image-20210624095410711.png)
+
+**板块管理**
+
+拥有板块添加、板块修改、板块删除功能
+
+![image-20210624095653971](image-20210624095653971.png)
+
+![image-20210624095718096](image-20210624095718096.png)
+
+**内容管理**
+
+拥有内容添加、内容修改、内容删除功能
+
+![image-20210624095840242](image-20210624095840242.png)
+
+![image-20210624095908240](image-20210624095908240.png)
+
+**用户退出与返回博客**
+
+右上角实现这两个功能
+
+![image-20210624100052761](image-20210624100052761.png)
+
+退出后：
+
+![image-20210624100110701](image-20210624100110701.png)

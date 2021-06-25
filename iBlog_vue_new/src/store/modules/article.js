@@ -8,6 +8,7 @@ const state = {
 const mutations = {
 
   [GET_ARTICLE] (state, data) {
+    console.log(data)
     state.content = data.content
     state.title = data.title
   },

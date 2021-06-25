@@ -1,19 +1,22 @@
 <template>
   <div class="about-wrapper">
-    <h2 class="list-title">关于</h2>
-    <p>现学现卖ing</p>
-    <a href="https://github.com/xiaohuji">Github</a>
+    <h1>现学现卖ing</h1>
+    <a href="https://github.com/xiaohuji">我的Github</a>
   </div>
 </template>
 
 <script type="text/babel">
-import { updateHeadline } from '../store/actions'
+// import { updateHeadline } from '../store/actions'
+import { mapActions } from 'vuex'
 export default {
-  vuex: {
-    actions: {
-      updateHeadline: updateHeadline
-    }
+  methods: {
+    ...mapActions(['getContentList', 'updateHeadline'])
   },
+  // vuex: {
+  //   actions: {
+  //     updateHeadline: updateHeadline
+  //   }
+  // },
   created () {
     this.updateHeadline('关于')
   }

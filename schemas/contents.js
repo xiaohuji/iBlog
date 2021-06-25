@@ -1,13 +1,3 @@
-/**
- * Created by zhangyi on 2017/6/13.
- */
-
-
-/*
- *n内容的表结构
- *
- * */
-
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
@@ -34,14 +24,7 @@ var schema = new mongoose.Schema({
     //内容
     content: {type: String, default: ''},
     //添加时间
-    addTime: {type: Date, default: new Date()},
-
-    //评论
-    comments: {
-        type: Array,
-        default: []
-    }
-
+    addTime: {type: Date, default: new Date()}
 });
 
 module.exports = schema;

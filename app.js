@@ -121,4 +121,3 @@ mongoose.connect('mongodb://localhost/myMongoose', function (err) {
     }
 });
 app.listen(3001, 'localhost');
-// console.log('Server is running at http://localhost:8081');

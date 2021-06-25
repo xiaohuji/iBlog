@@ -5,6 +5,7 @@
         <router-link :to="{ name: 'article', params: {id: item.objectId}}">
           <!-- <a v-link="{ name: 'article', params: {id: item._id}}"> -->
           <p class="list-title">{{item.title}}</p>
+          <p class="list-updated">作者：{{item.username}}</p>
           <p class="list-updated">{{item.createdAt}}</p>
           <p class="list-abstract">{{item.abstract}}</p>
         </router-link>

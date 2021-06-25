@@ -391,13 +391,13 @@ host文件路径:C:\Windows\System32\drivers\etc\hosts
 
 **超级管理员**
 
-！！！！注意：
+# ！！！！注意：
 
-账号：admin
+## 账号：admin
 
-密码：admin
+## 密码：admin
 
-为超级管理员
+# 为超级管理员!!!
 
 只有超级管理员有用户管理权限
 

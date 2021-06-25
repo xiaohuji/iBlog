@@ -75,22 +75,6 @@ const actions = {
     }, error => {
       commit(types.GET_TAG_CONTENT_LIST_FAILURE, error)
     })
-  },
-  // 根据 文章 id 获取 comments
-  getCommentsList ({ commit }, articleId) {
-    axios.get(API_ROOT + 'api/comments/' + articleId).then(response => {
-      commit(types.GET_COMMENTS_LIST, response.data)
-    }, error => {
-      commit(types.GET_COMMENTS_LIST_FAILURE, error)
-    })
-  },
-  // 提交评论
-  submitComment ({ commit }, data) {
-    axios.post(API_ROOT + 'api/comments/submitComment', data).then(response => {
-      commit(types.SUBMIT_COMMENT, response.data)
-    }, error => {
-      commit(types.SUBMIT_COMMENT_FAILURE, error)
-    })
   }
 }
 

@@ -233,41 +233,5 @@ routerApi.get('/user/logout', function (req, res) {
     return;
 });
 
-//文章加载获取指定文章的所有评论
-routerApi.get('/comment', function (req, res, next) {
-    var contentID = req.query.contentID || '';
-    //查询当前这篇内容的信息
-    Content.findOne({
-        _id: contentID
-    }).then(function (content) {
-        responseData.data = content.comments.reverse();
-        res.json(responseData);
-    });
-});
-
-
-//留言评论提交
-routerApi.post('/comment/post', function (req, res, next) {
-    //内容的ID
-    var contentID = req.body.contentID;
-    //定义评论 数组中字段
-    var postData = {
-        username: req.userInfo.username || '游客',
-        postTime: new Date(),
-        comment: req.body.comment
-    }
-    //查询当前这篇内容的信息
-    Content.findOne({
-        _id: contentID
-    }).then(function (content) {
-        content.comments.push(postData);
-        return content.save();
-    }).then(function (newContent) {
-        responseData.message = "评论成功";
-        responseData.data = newContent;
-        res.json(responseData);
-    });
-});
-
 
 module.exports = routerApi;

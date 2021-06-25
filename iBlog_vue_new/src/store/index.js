@@ -5,7 +5,6 @@ import headline from './modules/headline'
 import article from './modules/article'
 import tags from './modules/tags'
 import tagContentList from './modules/tagContentList'
-import commentsList from './modules/commentsList'
 import login from './modules/login'
 import register from './modules/register'
 import actions from './actions'
@@ -27,7 +26,6 @@ export default new Vuex.Store({
     article,
     tags,
     tagContentList,
-    commentsList,
     login,
     register
   },

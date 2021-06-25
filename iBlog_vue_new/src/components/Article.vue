@@ -3,7 +3,6 @@
     <div class="article">
       <div v-html="content">zzz</div>
     </div>
-      <comment></comment>
   </div>
 </template>
 
@@ -13,16 +12,12 @@ import Prism from 'prismjs'
 import 'prismjs/themes/prism.css'
 // import { article } from '../store/getters'
 // import { getArticle, updateHeadline, clearArticle } from '../store/actions'
-import Comment from './Comment'
 import { mapGetters, mapActions } from 'vuex'
 
 marked.setOptions({
   highlight: (code) => Prism.highlight(code, Prism.languages.javascript)
 })
 export default {
-  components: {
-    Comment
-  },
   // vuex: {
   //   getters: {
   //     article: article

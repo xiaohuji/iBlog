@@ -13,8 +13,6 @@ const getters = {
   tags: ({ tags }) => tags.tagSet,
 
   tagContentList: ({ tagContentList }) => tagContentList.tagContentList,
-  tagContentListId: ({ tagContentList }) => tagContentList.tagId,
-
-  commentsList: ({ commentsList }) => commentsList.commentsList
+  tagContentListId: ({ tagContentList }) => tagContentList.tagId
 }
 export default getters

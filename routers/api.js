@@ -196,7 +196,8 @@ routerApi.post('/user/login', function (req, res, next) {
         username: uName,
         password: pWord
     }).then(function (userInfo) {
-        // console.log(userInfo);
+        console.log('userinfo')
+        console.log(userInfo)
         if (!userInfo) {
             responseData.code = '1';
             responseData.message = '用户名或密码错误';
@@ -215,12 +216,15 @@ routerApi.post('/user/login', function (req, res, next) {
             _id: userInfo._id,
             username: userInfo.username
         };
+        console.log(responseData);
+        console.log(userInfo.username);
         req.cookies.set('userInfo', JSON.stringify({
             _id: userInfo._id,
             username: userInfo.username
         }));
+        console.log(req.cookies);
+        console.log('登录成功服务端返回给客户端的 返回信息 ' + responseData);
         res.json(responseData);
-        // console.log('这里打印 登录成功服务端返回给客户端的 返回信息 ' + responseData);
         return;
         // }
     });

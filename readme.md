@@ -136,13 +136,28 @@ axios已经默认不使用cookies了，我查了半天
 
 解决用户删除不完整bug
 
+6.25
+
 解决article不显示headTitle的bug
 
 解决了一些样式问题
 
+解决了第一次登录永远显示失败（实则已经成功），有时候明明密码错的也可以显示登录成功（实则失败）的bug，又是一个异步的问题
 
+解决了账号如果是中文无法登录的问题（cookie不支持中文，需要encode、decode）
 
-**###图片不显示解决方案**
+```javascript
+解决方案：
+设置cookies的时候把字符串转成base64
+this.cookies.set('test', new Buffer('中文').toString('base64'))
+
+用的时候把base64转回字符串
+new Buffer(转码后的字符串, 'base64').toString()
+```
+
+但是系统目前还是不支持中文账号，因为之前我确实没有想到这一点，现在要改的话工程量太大了，时间不允许，论架构优秀的重要性
+
+**###Github图片不显示解决方案**
 
 修改hosts文件  
 把这个ip地址加到hosts文件的最下面    
@@ -351,6 +366,8 @@ host文件路径:C:\Windows\System32\drivers\etc\hosts
 <img src="./images/image-20210624094010536.png" alt="image-20210624094010536" style="zoom: 25%;" />
 
 **注册界面**
+
+
 
 账号密码长度不符合、两次密码不正确或者账户已存在将会报错：
 

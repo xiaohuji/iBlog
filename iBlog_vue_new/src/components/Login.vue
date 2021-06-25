@@ -79,6 +79,16 @@ export default {
   },
   methods: {
     ...mapActions(['getLogin', 'updateHeadline']),
+    sleep (n) {
+      var start = new Date().getTime()
+      //  console.log('休眠前：' + start);
+      while (true) {
+        if (new Date().getTime() - start > n) {
+          break
+        }
+      }
+      // console.log('休眠后：' + new Date().getTime());
+    },
     // 重置验证码
     refreshCode () {
       this.form.code = ''
@@ -120,81 +130,52 @@ export default {
                 message: '登录超时，请确认账号是否存在或稍后访问！'
               })
             }, 10000)
-            console.log(this.form.username)
-            this.getLogin({
-              username: this.form.username,
-              password: this.form.password
-            })
-            console.log('login')
-            clearTimeout(timer)
-            console.log('code')
-            console.log(this.loginCode)
-            // loading.close()
-            // eslint-disable-next-line
-            if (this.loginCode == 1) {
-              this.$message({
-                type: 'error',
-                message: '账户或密码不正确'
-              })
-              loading.close()
-            } else if (this.form.code.toLowerCase() !== this.identifyCode.toLowerCase()) {
+            if (this.form.code.toLowerCase() !== this.identifyCode.toLowerCase()) {
               this.$message.error('验证码输入有误！')
               loading.close()
               this.refreshCode()
             // eslint-disable-next-line
-            }
-            // eslint-disable-next-line
-            else if (this.loginCode == 0){
-              var storage = window.localStorage
-              storage.isLogin = 1
-              // window.sessionStorage.userId = res.data.id
-              // window.sessionStorage.admin = res.data.data.isAdmin
-              // window.sessionStorage.username = res.data.data.bUInfoName
-              this.$message({
-                type: 'success',
-                message: '登录成功'
+            } else {
+              console.log(this.form.username)
+              this.getLogin({
+                username: this.form.username,
+                password: this.form.password
               })
-              loading.close()
-              this.$router.push({
-                path: '/home'
-              })
+              setTimeout(() => {
+                console.log('login')
+                clearTimeout(timer)
+                console.log('code')
+                console.log(this.loginCode)
+                // loading.close()
+                // eslint-disable-next-line
+                if (this.loginCode == 1) {
+                  this.$message({
+                    type: 'error',
+                    message: '账户或密码不正确'
+                  })
+                  loading.close()
+                  this.refreshCode()
+                } else if (this.loginCode === '0') {
+                  console.log('dlcg')
+                  console.log(this.loginCode)
+                  this.$message({
+                    type: 'success',
+                    message: '登录成功'
+                  })
+                  loading.close()
+                  this.$router.push({
+                    path: '/home'
+                  })
+                } else {
+                  this.$message({
+                    type: 'error',
+                    message: '登录失败'
+                  })
+                  loading.close()
+                  this.refreshCode()
+                }
+              }, 1000)
             }
-            // getLogin('/login',{
-            //   username:this.form.username,
-            //   password:this.form.password
-            // }).then(res => {
-            //   clearTimeout(timer);
-            //   if(res.data.code == 40000){
-            //     this.$message({
-            //       type: 'error',
-            //       message: '密码不正确',
-            //     })
-            //     loading.close()
-            //   }
-            //   else if (this.form.code.toLowerCase() !== this.identifyCode.toLowerCase()) {
-            //     this.$message.error('验证码输入有误！')
-            //     loading.close()
-            //     this.refreshCode()
-            //   }
-            //   else if(res.data.code == 20000){
-            //     var storage = window.localStorage
-            //     storage.isLogin = 1
-            //     window.sessionStorage.userId=res.data.id
-            //     window.sessionStorage.admin = res.data.data.isAdmin
-            //     window.sessionStorage.username = res.data.data.bUInfoName
-            //     this.$message({
-            //       type: 'success',
-            //       message: '登录成功'
-            //     })
-            //     loading.close()
-            //     this.$router.push({
-            //     path:'home',
-            //     })
-            //   }
-            // })
-            //   .catch(err => {})
-          } else {
-            return false
           }
         })
       }

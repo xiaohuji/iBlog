@@ -104,61 +104,63 @@ export default {
             console.log(this.registerCode)
             // loading.close()
             // eslint-disable-next-line
-            if (this.registerCode == 1) {
-              this.$message({
-                type: 'error',
-                message: '账户已存在'
-              })
-              loading.close()
-            } else if (this.registerCode == 0) {
-              var storage = window.localStorage
-              storage.isLogin = 1
-              // window.sessionStorage.userId = res.data.id
-              // window.sessionStorage.admin = res.data.data.isAdmin
-              // window.sessionStorage.username = res.data.data.bUInfoName
-              this.$message({
-                type: 'success',
-                message: '注册成功'
-              })
-              loading.close()
-              this.$router.push({
-                path: '/login'
-              })
-            }
-            // getLogin('/login',{
-            //   username:this.form.username,
-            //   password:this.form.password
-            // }).then(res => {
-            //   clearTimeout(timer);
-            //   if(res.data.code == 40000){
-            //     this.$message({
-            //       type: 'error',
-            //       message: '密码不正确',
-            //     })
-            //     loading.close()
-            //   }
-            //   else if (this.form.code.toLowerCase() !== this.identifyCode.toLowerCase()) {
-            //     this.$message.error('验证码输入有误！')
-            //     loading.close()
-            //     this.refreshCode()
-            //   }
-            //   else if(res.data.code == 20000){
-            //     var storage = window.localStorage
-            //     storage.isLogin = 1
-            //     window.sessionStorage.userId=res.data.id
-            //     window.sessionStorage.admin = res.data.data.isAdmin
-            //     window.sessionStorage.username = res.data.data.bUInfoName
-            //     this.$message({
-            //       type: 'success',
-            //       message: '登录成功'
-            //     })
-            //     loading.close()
-            //     this.$router.push({
-            //     path:'home',
-            //     })
-            //   }
-            // })
-            //   .catch(err => {})
+            setTimeout(() => {
+              if (this.registerCode == 1) {
+                this.$message({
+                  type: 'error',
+                  message: '账户已存在'
+                })
+                loading.close()
+              } else if (this.registerCode == 0) {
+                var storage = window.localStorage
+                storage.isLogin = 1
+                // window.sessionStorage.userId = res.data.id
+                // window.sessionStorage.admin = res.data.data.isAdmin
+                // window.sessionStorage.username = res.data.data.bUInfoName
+                this.$message({
+                  type: 'success',
+                  message: '注册成功'
+                })
+                loading.close()
+                this.$router.push({
+                  path: '/login'
+                })
+              }
+              // getLogin('/login',{
+              //   username:this.form.username,
+              //   password:this.form.password
+              // }).then(res => {
+              //   clearTimeout(timer);
+              //   if(res.data.code == 40000){
+              //     this.$message({
+              //       type: 'error',
+              //       message: '密码不正确',
+              //     })
+              //     loading.close()
+              //   }
+              //   else if (this.form.code.toLowerCase() !== this.identifyCode.toLowerCase()) {
+              //     this.$message.error('验证码输入有误！')
+              //     loading.close()
+              //     this.refreshCode()
+              //   }
+              //   else if(res.data.code == 20000){
+              //     var storage = window.localStorage
+              //     storage.isLogin = 1
+              //     window.sessionStorage.userId=res.data.id
+              //     window.sessionStorage.admin = res.data.data.isAdmin
+              //     window.sessionStorage.username = res.data.data.bUInfoName
+              //     this.$message({
+              //       type: 'success',
+              //       message: '登录成功'
+              //     })
+              //     loading.close()
+              //     this.$router.push({
+              //     path:'home',
+              //     })
+              //   }
+              // })
+              //   .catch(err => {})
+            }, 1000)
           } else {
             return false
           }
